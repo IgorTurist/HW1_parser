@@ -1,28 +1,30 @@
 package innopolis.igor;
 
+import resources.*;
+
 public class Main {
+
+    private static String[] paths = {/*"./test_data/normal_file.txt",
+                                    "./test_data/ghost_file.txt",
+                                    "./test_data",
+                                    "file:///C:/Users/igor/IdeaProjects/HW1_parser/test_data/normal_file.txt",
+                                    "http://joomla.ru/robots.txt",
+                                    "https://github.com/binnocl/innoshop.me/blob/master/README.md",*/
+                                    "http://github.com/ddddddddrrrrrrrrrrrrrrrrrrrrr.txt"};
+
     public static void main(String[] args) {
         try {
-            if (args.length == 0)
-                throw new Exception("There are no any resources to process.\r\nRerun the program with not empty resources list.");
 
-            TextResource resource;
-            for(int i = 0;i<args.length;i++) {
-                TextResource.ResourceType type = TextResource.getResourceType(args[i]);
-                if(type == TextResource.ResourceType.FILE){
-                    resource = new innopolis.igor.FileResource(args[i]);
+//            if (args.length == 0)
+//                throw new Exception("There are no any resources to process.\r\nRerun the program with not empty resources list.");
+
+            for(String path: paths){
+                TextResource res = TextResouceFactory.createTextResource(path);
+                if(res != null) {
+                    System.out.println(path + " " + res.getClass());
                 }
-                else if(type == TextResource.ResourceType.URL){
-                    resource = new innopolis.igor.UrlResource(args[i]);
-                }
-                else{
-                    throw new Exception("\"" + args[0] + "\"" +" has incorrect type.\r\nCheck input data and try again.");
-                }
-
-                if(!resource.isValid())
-                    throw new Exception("\"" + args[0] + "\"" + " can't be opened.\r\nCheck it's  accessibility and try again");
-
-
+                else System.out.println("Null Pointer");
+                System.out.println("------------------------------");
             }
         }
         catch(Exception ex){

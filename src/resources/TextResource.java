@@ -1,4 +1,4 @@
-package innopolis.igor;
+package resources;
 
 import java.util.HashMap;
 
@@ -6,14 +6,6 @@ import java.util.HashMap;
  * Created by igor on 07.02.2017.
  */
 public class TextResource {
-
-    public enum ResourceType {FILE,URL,UNDEFINED};
-
-    public static ResourceType getResourceType(String path){
-//this is a stub. you must write it!!!
-        ResourceType result = ResourceType.UNDEFINED;
-        return result;
-    }
 
     static {
         dict = new HashMap<String,Long>(TextResource.INIT_CAPACITY);

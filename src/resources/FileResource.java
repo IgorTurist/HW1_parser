@@ -1,13 +1,17 @@
-package innopolis.igor;
+package resources;
 
-import java.util.HashMap;
+import resources.TextResource;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Created by igor on 07.02.2017.
  */
 public class FileResource extends TextResource {
     public FileResource(){
-        super();
     }
 
     public FileResource(String path){
@@ -16,9 +20,9 @@ public class FileResource extends TextResource {
 
     @Override
     public boolean isValid() {
-        boolean res = false;
-//this is a stub. Don't forget to fill it!!!
-        return res;
+        File f = new File(path);
+        System.out.println();
+        return f.isFile();
     }
 
     @Override
