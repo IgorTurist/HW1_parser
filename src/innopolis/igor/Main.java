@@ -6,10 +6,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.*;
 
+/**
+ * Main - сновной класс, содержащий точку входа в программу
+ */
 public class Main {
 
     private static final Logger log =  Logger.getLogger(Main.class.getName());
 
+    /**
+     * Точка входа в программу
+     *
+     * @param args список путей к ресурсам, которые программа будет обрабатывать
+     */
     public static void main(String[] args) {
         Thread[] threads = new Thread[args.length];
 
@@ -40,6 +48,12 @@ public class Main {
         }
 
     }
+
+    /**
+     * Метод коректно завершает работу запущенных потоков
+     *
+     * @param threads массив потоков, которые необходимо завершить
+     */
     private static void closeThreads(Thread[] threads){
         for(Thread thread: threads){
             try{

@@ -6,9 +6,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Created by igor on 08.02.2017.
+ * Класс является представлением ресурса, содержащего тест
  */
 public class TextResourceFactory {
+    /**
+     * Метод создает экземпляр одного из потомков класса TextResource.
+     * Выбор осуществляется на основе анализа адреса ресурса.
+     * Адрес должен быть корректен. Ресурс по адресу должен быть доступен для считывания.
+     *
+     * @param path адрес ресурса
+     * @return один из наследников класса TextResource
+     * @throws Exception выбрасывается если путь к ресурсу не корректен, либо ресурс не доступен.
+     */
     public static TextResource createTextResource (String path)throws Exception {
         try {
             File f = new File(path);

@@ -3,9 +3,18 @@ package parser;
 import java.util.Map;
 
 /**
- * Created by igor on 08.02.2017.
+ * Класс предназначен для сбора статистики о количестве различных слов в тексте
  */
 public class TextParser {
+
+    /**
+     * Метод считет количество вхождений каждого слова в строку parsedStr
+     *
+     * @param parsedStr строка, в которой ведется подсчет слов
+     * @param dict коллекция, в которую записывается результат в формате пар {"слово" - "количество в строке"}
+     * @throws Exception выбрасывается в случае, если строка содержит недопустимые символы.
+     * Допустимые символы: кирилические символы, цифры и знаки препинания(,.:…;!?()"'-—).
+     */
     static public void getStringStatistic(String parsedStr, Map<String, Long> dict) throws Exception{
         String[] words = parsedStr.split("\\s");
 
@@ -33,10 +42,23 @@ public class TextParser {
         }
     }
 
+    /**
+     * Метод проверяет вхождение в строку недопустимых символов.
+     * Допустимые символы: кирилические символы, цифры и знаки препинания(,.:…;!?()"'-—)
+     *
+     * @param str анализируемая строка
+     * @return true, если строка содержит недопустимые символы, false - в противном случае.
+     */
     private static boolean hasIllegalChar(String str){
         return !str.matches("^[()а-яё:;!?\\.…,--——\\\"\\'\\d]+$");
     }
 
+    /**
+     * Выделяет слово из строки, убирая знаки препинания
+     *
+     * @param str анализируемая строка
+     * @return слово
+     */
     private static String removePunctuation(String str){
         String res = str;
         

@@ -7,22 +7,35 @@ import java.io.File;
 import java.io.FileReader;
 
 /**
- * Created by igor on 07.02.2017.
+ * Класс предназначен для подсчета количества разных слов в текстовом ресурсе,
+ * который расположен в файловой системе
  */
 public class FileResource extends TextResource {
-    public FileResource(){
-    }
 
+    /**
+     * Конструктор класса
+     * @param path адрес ресурса в файловой системе
+     */
     public FileResource(String path){
         this.path = path;
     }
 
+    /**
+     * Метод проверяет корректность ресурса, находящегося по адресу, хранимому в "path"
+     *
+     * @return true, если ресурс доступен для считывания по указанному ресурсу
+     */
     @Override
     public boolean isValid() throws NullPointerException{
         File f = new File(path);
         return f.isFile();
     }
 
+    /**
+     * Метод запускает подсчет слов в ресурсе
+     *
+     * @throws Exception возникает в случае ошибок при обработке ресурса
+     */
     @Override
     public void runResourceParsing() throws Exception {
         if (!isValid())

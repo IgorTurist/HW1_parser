@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 /**
- * Created by igor on 07.02.2017.
+ * Класс предназначен для подсчета количества разных слов в текстовом ресурсе
  */
 public abstract class TextResource implements Runnable{
 
@@ -12,6 +12,9 @@ public abstract class TextResource implements Runnable{
         dict = new HashMap<String,Long>(TextResource.INIT_CAPACITY);
     }
 
+    /**
+     * Метод позволяет запускать процесс обработки данных ресурса в отдельном потоке
+     */
     @Override
     public void run() {
         try{
@@ -24,26 +27,62 @@ public abstract class TextResource implements Runnable{
         log.info("Thread (id=" + Thread.currentThread().getId() + ") has just been finished.");
     }
 
+    /**
+     * Метод проверяет корректность ресурса, находящегося по адресу ресурса
+     * Доступ к адресу ресурса можно получить через методы getPath() и setPath()
+     *
+     * @return true, если ресурс доступен для считывания по указанному адресу
+     * false - в противном случае
+     */
     public abstract boolean isValid();
 
+    /**
+     * Метод возвращает адрес ресурса
+     *
+     * @return адрес ресурса
+     */
     public String getPath() {
         return path;
     }
 
+    /**
+     * Метод устанавливает адрес ресурса
+     *
+     * @param path адрес ресурса
+     */
     public void setPath(String path) {
         this.path = path;
     }
 
+    /**
+     * Метод возвращает статистические данные о количестве различных слов в ресурсе
+     *
+     * @return коллекция, содержащая информацию о количестве различных слов в ресурсе
+     * в виде пар вида {"слово" - "количество в ресурсе"}
+     */
     public static HashMap<String, Long> getDict() {
         return dict;
     }
 
+    /**
+     * Интерфейс метода запуска подсчета слов в ресурсе
+     *
+     * @throws Exception возникает в случае ошибок при обработке ресурса
+     */
     public abstract void runResourceParsing()throws Exception;
 
+    /**
+     * Останавливает подсчет количества слов в ресурсе в случае работы в отдельном потоке
+     */
     public static void stopResourceParsing(){
         finish = true;
     }
 
+    /**
+     * Метод возвращает информацию о безошибочности обработки ресурса
+     *
+     * @return если ресурс обработан без ошибок, метод возвращает true, в противном случае false
+     */
     public static boolean isParsingSucceeded(){
         return !finish;
     }

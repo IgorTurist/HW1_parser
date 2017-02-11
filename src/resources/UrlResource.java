@@ -8,16 +8,24 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Created by igor on 07.02.2017.
+ * Класс предназначен для подсчета количества разных слов в текстовом ресурсе,
+ * который расположен в удаленной файловой системе
  */
 public class UrlResource extends TextResource {
-    public UrlResource(){
-    }
 
+    /**
+     * Конструктор класса
+     * @param path адрес ресурса в файловой системе
+     */
     public UrlResource(String path){
         this.path = path;
     }
 
+    /**
+     * Метод проверяет корректность ресурса, находящегося по адресу, хранимому в "path"
+     *
+     * @return true, если ресурс доступен для считывания по указанному ресурсу
+     */
     @Override
     public boolean isValid(){
         boolean res = false;
@@ -42,6 +50,11 @@ public class UrlResource extends TextResource {
         return res;
     }
 
+    /**
+     * Метод запускает подсчет слов в ресурсе
+     *
+     * @throws Exception возникает в случае ошибок при обработке ресурса
+     */
     @Override
     public void runResourceParsing() throws MalformedURLException, Exception{
         if (!isValid())
