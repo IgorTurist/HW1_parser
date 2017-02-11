@@ -8,8 +8,8 @@ import java.net.URL;
 /**
  * Created by igor on 08.02.2017.
  */
-public class TextResouceFactory {
-    public static TextResource createTextResource(String path){
+public class TextResourceFactory {
+    public static TextResource createTextResource (String path)throws Exception {
         try {
             File f = new File(path);
             if (f.isFile())
@@ -17,23 +17,16 @@ public class TextResouceFactory {
 
             URL url = new URL(path);
             InputStream is = url.openStream();
-            int ave = is.available();
             if(is.available() > 0)
                 return new UrlResource(path);
             else
-                throw new Exception("Unavailable url: \"" + path + "\"");
+                throw new Exception("Unavailable url: \"" + path + "\"\r\nFix it and try again.");
         }
         catch(NullPointerException ex){
-            System.out.println("\"" + path + "\" Sorry, internal program error occurred\r\n" +
-                    "Try to start the program again.");
+            throw new Exception("There is an empty path to a resource.\r\nExclude empty paths from input data and try again");
         }
         catch(MalformedURLException ex){
-            System.out.println("\"" + path + "\" - this is malformed url.\r\nFix it and try again.");
+            throw new Exception("\"" + path + "\" - this is malformed url or incorrect file system path.\r\nFix it and try again.");
         }
-        catch(Exception ex){
-            System.out.println("Error occurred:" + ex.getMessage());
-        }
-
-        return null;
     }
 }

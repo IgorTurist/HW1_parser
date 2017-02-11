@@ -1,11 +1,10 @@
 package resources;
 
-import resources.TextResource;
+
+import parser.TextParser;
 
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 
 /**
@@ -30,13 +29,13 @@ public class UrlResource extends TextResource {
                     res = true;
             }
             catch(IOException ex){
-                System.out.println("The program can't find remote resource.\r\n " +
+                log.config("The program can't find remote resource.\r\n " +
                             "Check its existence and network connection and try again.\r\n");
                 res = false;
             }
         }
         catch (MalformedURLException ex) {
-            System.out.println("\"" + path + "\" - this is malformed url.\r\nFix it and try again.");
+            log.config("\"" + path + "\" - this is malformed url.\r\nFix it and try again.");
             res = false;
         }
 
@@ -44,7 +43,28 @@ public class UrlResource extends TextResource {
     }
 
     @Override
-    public void runResourceParsing(){
-//this is a stub. Don't forget to fill it!!!
+    public void runResourceParsing() throws MalformedURLException, Exception{
+        if (!isValid())
+            throw new Exception("\"" + path + "\" is not a valid file");
+
+        URL url = new URL(path);
+
+        try (InputStream stream = url.openStream();
+             BufferedReader br = new BufferedReader(new InputStreamReader(stream))) {
+
+            String s = null;
+            boolean isFirst = false;
+            while ((s = br.readLine()) != null && !finish) {
+                if (!isFirst) {
+                    s = s.substring(1);
+                    isFirst = true;
+                }
+
+                TextParser.getStringStatistic(s, TextResource.getDict());
+            }
+        }
+        catch (Exception ex) {
+            throw ex;
+        }
     }
 }
