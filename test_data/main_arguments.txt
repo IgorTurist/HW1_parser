@@ -6,5 +6,6 @@
 "http://joomla.ru/robots.txt"
 "http://github.com/ddddddddrrrrrrrrrrrrrrrrrrrrr.txt"
 "./test_data/normal_file.txt"
+"./test_data/normal_file2.txt"
 "file:///C:/Users/igor/IdeaProjects/HW1_parser/test_data/normal_file.txt"
 "./test_data/illegal_symbol.txt"
