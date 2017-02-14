@@ -18,13 +18,15 @@ public abstract class TextResource implements Runnable{
     @Override
     public void run() {
         try{
+            finish = false;
             runResourceParsing();
         }
         catch(Exception ex){
             finish = true;
+            dict.clear();
             log.severe(ex.getMessage());
         }
-        log.info("Thread (id=" + Thread.currentThread().getId() + ") is going to be finished till since the moment.");
+        log.info("Thread (id=" + Thread.currentThread().getId() + ") is going to be finished since the moment.");
     }
 
     /**

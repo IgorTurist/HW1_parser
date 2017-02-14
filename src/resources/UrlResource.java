@@ -77,6 +77,9 @@ public class UrlResource extends TextResource {
             }
         }
         catch (Exception ex) {
+            synchronized (TextResource.getDict()) {
+                TextResource.getDict().clear();
+            }
             throw ex;
         }
     }

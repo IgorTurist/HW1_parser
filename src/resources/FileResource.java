@@ -55,7 +55,11 @@ public class FileResource extends TextResource {
 
                 TextParser.getStringStatistic(s, TextResource.getDict());
             }
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
+            synchronized (TextResource.getDict()) {
+                TextResource.getDict().clear();
+            }
             throw ex;
         }
     }
