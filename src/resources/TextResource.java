@@ -1,14 +1,20 @@
 package resources;
 
+import innopolis.igor.Main;
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
+
 import java.util.HashMap;
-import java.util.logging.Logger;
 
 /**
  * Класс предназначен для подсчета количества разных слов в текстовом ресурсе
  */
 public abstract class TextResource implements Runnable{
 
+    protected static final Logger logger = Logger.getLogger(Main.class);
+
     static {
+        DOMConfigurator.configure("src/resources/log4j.xml");
         dict = new HashMap<>(TextResource.INIT_CAPACITY);
     }
 
@@ -24,9 +30,11 @@ public abstract class TextResource implements Runnable{
         catch(Exception ex){
             finish = true;
             dict.clear();
-            log.severe(ex.getMessage());
+
+            logger.error(ex.getMessage() + "\r\n");
         }
-        log.info("Thread (id=" + Thread.currentThread().getId() + ") is going to be finished since the moment.");
+
+        logger.trace("Thread (id=" + Thread.currentThread().getId() + ") is going to be finished since the moment.\r\n");
     }
 
     /**
@@ -93,5 +101,4 @@ public abstract class TextResource implements Runnable{
     protected String path = "";
     private static final int INIT_CAPACITY = 100;
     private static volatile HashMap<String,Long> dict;
-    protected static final Logger log = Logger.getLogger(TextResource.class.getName());
 }

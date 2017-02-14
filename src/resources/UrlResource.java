@@ -37,13 +37,13 @@ public class UrlResource extends TextResource {
                     res = true;
             }
             catch(IOException ex){
-                log.config("The program can't find remote resource.\r\n " +
+                logger.error("The program can't find remote resource.\r\n " +
                             "Check its existence and network connection and try again.\r\n");
                 res = false;
             }
         }
         catch (MalformedURLException ex) {
-            log.config("\"" + path + "\" - this is malformed url.\r\nFix it and try again.");
+            logger.error("\"" + path + "\" - this is malformed url.\r\nFix it and try again.\r\n");
             res = false;
         }
 
@@ -75,6 +75,12 @@ public class UrlResource extends TextResource {
 
                 TextParser.getStringStatistic(s, TextResource.getDict());
             }
+        }
+        catch (IOException ex) {
+            synchronized (TextResource.getDict()) {
+                TextResource.getDict().clear();
+            }
+            throw new Exception(ex.getMessage());
         }
         catch (Exception ex) {
             synchronized (TextResource.getDict()) {

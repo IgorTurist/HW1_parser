@@ -5,6 +5,7 @@ import parser.TextParser;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Класс предназначен для подсчета количества разных слов в текстовом ресурсе,
@@ -55,6 +56,12 @@ public class FileResource extends TextResource {
 
                 TextParser.getStringStatistic(s, TextResource.getDict());
             }
+        }
+        catch(IOException ex){
+            synchronized (TextResource.getDict()) {
+                TextResource.getDict().clear();
+            }
+            throw new Exception(ex.getMessage());
         }
         catch (Exception ex) {
             synchronized (TextResource.getDict()) {

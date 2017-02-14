@@ -1,11 +1,21 @@
 package parser;
 
+import innopolis.igor.Main;
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
+
 import java.util.Map;
 
 /**
  * Класс предназначен для сбора статистики о количестве различных слов в тексте
  */
 public class TextParser {
+
+    private static final Logger logger = Logger.getLogger(Main.class);
+
+    static {
+        DOMConfigurator.configure("src/parser/log4j.xml");
+    }
 
     /**
      * Метод считет количество вхождений каждого слова в строку parsedStr
@@ -32,11 +42,13 @@ public class TextParser {
             synchronized (dict) {
                 if (dict.containsKey(words[i])) {
                     dict.put(words[i], dict.get(words[i]) + 1);
-                    System.out.println("Thread (id=" + Thread.currentThread().getId() + ") increased value for \"" + words[i] + "\"");
+                    logger.trace("Thread (id=" + Thread.currentThread().getId() +
+                            ") increased value for \"" + words[i] + "\"\r\n");
                 }
                 else {
                     dict.put(words[i], new Long(1));
-                    System.out.println("Thread (id=" + Thread.currentThread().getId() + ") added new word \"" + words[i] + "\"");
+                    logger.trace("Thread (id=" + Thread.currentThread().getId() +
+                            ") added new word \"" + words[i] + "\"\r\n");
                 }
             }
         }

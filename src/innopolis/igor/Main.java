@@ -1,17 +1,21 @@
 package innopolis.igor;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import resources.*;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.*;
 
 /**
  * Main - сновной класс, содержащий точку входа в программу
  */
 public class Main {
 
-    private static final Logger log =  Logger.getLogger(Main.class.getName());
+    public static final Logger logger = Logger.getLogger(Main.class);
+
+    static {
+        DOMConfigurator.configure("src/innopolis/igor/log4j.xml");
+    }
 
     /**
      * Точка входа в программу
@@ -35,22 +39,22 @@ public class Main {
 
             if(TextResource.isParsingSucceeded()) {
                 HashMap<String, Long> dict = TextResource.getDict();
-                System.out.println("\r\nFinal report:");
+                logger.trace("\r\nFinal report:\r\n");
                 for (Map.Entry<String, Long> entry : dict.entrySet()) {
-                    System.out.println("\t" + entry.getKey() + ": " + entry.getValue());
+                    logger.trace("\t" + entry.getKey() + ": " + entry.getValue()+"\r\n");
                 }
             }
         }
         catch(Exception ex){
             TextResource.stopResourceParsing();
             closeThreads(threads);
-            log.severe(ex.getMessage());
-        }
 
+            logger.error(ex.getMessage() + "\r\n");
+        }
     }
 
     /**
-     * Метод коректно завершает работу запущенных потоков
+     * Метод корректно завершает работу запущенных потоков
      *
      * @param threads массив потоков, которые необходимо завершить
      */
@@ -64,7 +68,7 @@ public class Main {
                 }
             }
             catch (InterruptedException ex){
-                log.config("Thread closing error: " + ex.getMessage());
+                logger.error("Thread closing error: " + ex.getMessage() + "\r\n");
             }
         }
     }
